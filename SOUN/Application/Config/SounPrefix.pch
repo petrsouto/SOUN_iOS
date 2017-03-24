@@ -1,0 +1,46 @@
+//  SounPrefix.pch
+//  Created by Guus
+
+#ifndef SilverPrefix_pch
+#define SilverPrefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+// Library
+#import "Config.h"
+#include <QuartzCore/QuartzCore.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+#import "JASidePanelController.h"
+#import "UIViewController+JASidePanel.h"
+#import "DoAlertView.h"
+#import "JSON.h"
+
+
+// Controllers & Models
+#import "AppController.h"
+#import "CommonUtils.h"
+#define appController [AppController sharedInstance]
+#define commonUtils [CommonUtils shared]
+
+// Base Views
+#import "MySidePanelController.h"
+#import "BaseViewController.h"
+
+// Pages
+#import "LanguageVC.h"
+#import "WelcomeRootVC.h"
+#import "WelcomeChildVC.h"
+#import "LoginVC.h"
+#import "ServicesVC.h"
+#import "ServiceStepFirstVC.h"
+#import "ServiceStepSecondVC.h"
+#import "ServiceStepThirdVC.h"
+#import "OrderReviewVC.h"
+#import "AddNewLocationVC.h"
+#import "HistoryVC.h"
+#import "ContactUsVC.h"
+
+#endif

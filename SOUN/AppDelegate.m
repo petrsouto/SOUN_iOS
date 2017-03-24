@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 @interface AppDelegate ()
 
 @end
@@ -17,8 +19,43 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    UIPageControl *pageControl = [UIPageControl appearance];
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.4];
+    pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+    pageControl.backgroundColor = [UIColor clearColor];
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+
+    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"ic_back.png"]];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"ic_back.png"]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [self updateLocationManager];
+    
     return YES;
 }
+
+- (void)updateLocationManager {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    [_locationManager setDistanceFilter:804.17f]; // Distance Filter as 0.5 mile (1 mile = 1609.34m)
+    //locationManager.distanceFilter=kCLDistanceFilterNone;
+    
+    
+    // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+    //    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+    //        [_locationManager requestWhenInUseAuthorization];
+    //    }
+    
+    if(IS_OS_8_OR_LATER) {
+        [_locationManager requestAlwaysAuthorization];
+    }
+    [_locationManager startMonitoringSignificantLocationChanges];
+    [_locationManager startUpdatingLocation];
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
